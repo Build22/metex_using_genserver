@@ -15,6 +15,10 @@ defmodule Metex.Worker do
     GenServer.call(pid, :get_stats)
   end
 
+  def reset_stats(pid) do
+    GenServer.cast(pid, :reset_stats)
+  end
+
   ### GenServer Callbacks
 
   def init(:ok) do
@@ -33,6 +37,10 @@ defmodule Metex.Worker do
 
   def handle_call(:get_stats, _from, stats) do
     {:reply, stats, stats}
+  end
+
+  def handle_cast(:reset_stats, _stats) do
+    {:noreply, %{}}
   end
 
   ### Helper Functions
